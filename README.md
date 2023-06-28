@@ -1,2 +1,3 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+<p align="center">
+  <img src="assets/cli.jfif" alt="super CLI" width="300">
+</p>
