@@ -1,1 +1,7 @@
-<img src="assets/cli.jfif" alt="super CLI" width="300" style="display: block; margin: auto;">
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/cli.jfif" alt="super CLI" width="300">
+    </td>
+  </tr>
+</table>
