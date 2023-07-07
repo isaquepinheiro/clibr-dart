@@ -7,11 +7,12 @@ class CommandModule implements ICommand {
   @override
   ICommand? execute(final String dirName, final String fileName,
       final IModularCLI modularCLI) {
+    final bool isAppModule = fileName.toLowerCase() == 'app';
     String modulePath = dirName;
-    bool guard = false;
+    bool isGuard = false;
 
-    if (modulePath.isEmpty) {
-      modulePath = './';
+    if ((modulePath.isEmpty) || (modulePath == '.')) {
+      modulePath = './src/modules/$fileName';
     }
     if (fileName.isEmpty) {
       print('Invalid parameters!');
@@ -22,113 +23,49 @@ class CommandModule implements ICommand {
     }
     // Options - Guard
     if (modularCLI.options.containsKey('--guard')) {
-      guard = modularCLI.options['--guard'] ?? false;
+      isGuard = modularCLI.options['--guard'] ?? false;
     } else if (modularCLI.options.containsKey('-gu')) {
-      guard = modularCLI.options['-gu'] ?? false;
+      isGuard = modularCLI.options['-gu'] ?? false;
     }
-    _executeInternal(modulePath, fileName, guard);
+    final String unitName = fileName.toLowerCase();
+    final String className = fileName[0].toUpperCase() + fileName.substring(1);
+    final String moduleName = 'T${className}Module';
+    final String templateFilePath = isAppModule == true
+        ? './templates/module.app.txt'
+        : './templates/module.txt';
+    final String templateFileName = '$modulePath/$unitName.module.pas';
+    final String templateContent = File(templateFilePath).readAsStringSync();
+    String modifiedContent = templateContent
+        .replaceAll('{moduleName}', moduleName)
+        .replaceAll('{unitName}', unitName)
+        .replaceAll('{className}', className);
 
+    modifiedContent = modifiedContent
+        .replaceFirst('{guardCode}', _generateGuardBody(className, isGuard))
+        .replaceFirst(
+            '{guardHeader}', _generateGuardHeader(className, isGuard));
+    File(templateFileName).writeAsStringSync(modifiedContent);
+    // Console
+    Utils.printCreate(
+        'CREATE', templateFileName, Utils.getSizeFile(templateFileName));
     return this;
   }
 
-  void _executeInternal(
-      final String path, final String fileName, final bool guard) {
-    final String className =
-        'T${fileName[0].toUpperCase() + fileName.substring(1)}';
-    final String unitName = fileName.toLowerCase();
-    final String moduleName = '${className}Module';
-    final List<String> code = [];
-    final bool isPingModule = fileName.toLowerCase() == 'ping';
-    final bool isAppModule = fileName.toLowerCase() == 'app';
+  String _generateGuardBody(final String className, final bool isGuard) {
+    final String templateFilePath = './templates/guards/body.txt';
+    final String templateContent = File(templateFilePath).readAsStringSync();
+    final String modifiedContent =
+        templateContent.replaceAll('{className}', 'T$className');
 
-    code.add('unit $unitName.module;');
-    code.add('');
-    code.add('interface');
-    code.add('');
-    code.add('uses');
-    if (isPingModule) {
-      code.add('  ping.controller,');
-    } else if (isAppModule) {
-      code.add('  ping.module,');
-      code.add('  ping.route.handle,');
-    }
-    code.add('  dmfbr.module;');
-    code.add('');
-    if (guard) {
-      _generateGuardHeader(code, className);
-    }
-    code.add('  $moduleName = class(TModule)');
-    code.add('  public');
-    code.add('    function Imports: TImports; override;');
-    code.add('    function Binds: TBinds; override;');
-    code.add('    function Routes: TRoutes; override;');
-    code.add('    function RouteHandlers: TRouteHandlers; override;');
-    code.add('    function ExportedBinds: TExportedBinds; override;');
-    code.add('  end;');
-    code.add('');
-    code.add('implementation');
-    code.add('');
-    code.add('{ $moduleName }');
-    code.add('');
-    code.add('function $moduleName.Binds: TBinds;');
-    code.add('begin');
-    if (isPingModule) {
-      code.add('  Result := [Bind<PingController>.Singleton];');
-    } else {
-      code.add('  Result := [];');
-    }
-    code.add('end;');
-    code.add('');
-    code.add('function $moduleName.ExportedBinds: TExportedBinds;');
-    code.add('begin');
-    code.add('  Result := [];');
-    code.add('end;');
-    code.add('');
-    code.add('function $moduleName.Imports: TImports;');
-    code.add('begin');
-    code.add('  Result := [];');
-    code.add('end;');
-    code.add('');
-    code.add('function $moduleName.RouteHandlers: TRouteHandlers;');
-    code.add('begin');
-    code.add('  Result := [];');
-    code.add('end;');
-    code.add('');
-    code.add('function $moduleName.Routes: TRoutes;');
-    code.add('begin');
-    code.add('  Result := [];');
-    code.add('end;');
-    if (guard) {
-      _generateGuardCode(code, className);
-    }
-    code.add('');
-    code.add('end.');
-
-    final String moduleFilePath = '$path/$unitName.module.pas';
-    File(moduleFilePath).writeAsStringSync(code.join('\n'));
-    // Console
-    Utils.printCreate(
-        'CREATE', moduleFilePath, Utils.getSizeFile(moduleFilePath));
+    return isGuard ? modifiedContent : '';
   }
 
-  void _generateGuardCode(
-      final List<String> moduleCode, final String className) {
-    moduleCode.add('');
-    moduleCode.add('{ ${className}Guard }');
-    moduleCode.add('');
-    moduleCode.add('class function ${className}Guard.Call: Boolean;');
-    moduleCode.add('begin');
-    moduleCode.add('  Result := true;');
-    moduleCode.add('end;');
-  }
+  String _generateGuardHeader(final String className, final bool isGuard) {
+    final String templateFilePath = './templates/guards/header.txt';
+    final String templateContent = File(templateFilePath).readAsStringSync();
+    final String modifiedContent =
+        templateContent.replaceAll('{className}', 'T$className');
 
-  void _generateGuardHeader(
-      final List<String> moduleCode, final String className) {
-    moduleCode.add('type');
-    moduleCode.add('  ${className}Guard = class(TRouteMiddleware)');
-    moduleCode.add('  public');
-    moduleCode.add('    class function Call: boolean; override;');
-    moduleCode.add('  end;');
-    moduleCode.add('');
+    return isGuard ? modifiedContent : '';
   }
 }

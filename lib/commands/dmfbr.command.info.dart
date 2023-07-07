@@ -3,7 +3,7 @@ import 'package:dmfbr/dmfbr.interfaces.dart';
 
 class CommandInfo implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String filename,
+  ICommand? execute(final String dirName, final String fileName,
       final IModularCLI modularCLI) {
     _executeInternal();
     return this;

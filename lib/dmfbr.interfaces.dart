@@ -6,8 +6,10 @@ abstract interface class ICommand {
 }
 
 abstract interface class IModularCLI {
+  String get command;
+  set command(String value);
   Map<String, Map<String, CommandPair>> get commands;
-  Map<String, CommandPair> get commandsHorse;
+  Map<String, CommandPair> get commandsExtra;
   Map<String, bool> get options;
   List<String> get commandsExecute;
 }
