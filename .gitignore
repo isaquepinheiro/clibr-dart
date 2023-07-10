@@ -2,3 +2,6 @@
 # Created by `dart pub`
 .dart_tool/
 bin/app/
+bin/*.zip
+bin/dmfbr_*
+bin/dmfbr.exe
