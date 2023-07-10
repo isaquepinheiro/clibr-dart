@@ -38,7 +38,7 @@ dmfbr --version
 ## Flags
 
 ### > --vcl --horse, --guard 
-This flag defines new project partner Horse or vcl
+This flag defines new project partner Horse or VCL
 ```
 dmfbr new app my_api --horse
 dmfbr new app my_api --vcl
