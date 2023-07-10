@@ -7,12 +7,11 @@ import 'vcl/dmfbr.command.pas.vcl.dart';
 
 class CommandGenerateProject implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
+  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
     String projectPath = dirName;
     String sourcePath = dirName;
-    bool horse = false;
-    bool vcl = false;
+    bool isHorse = false;
+    bool isVCL = false;
 
     if (dirName.isEmpty) {
       projectPath = './';
@@ -27,87 +26,70 @@ class CommandGenerateProject implements ICommand {
     }
     sourcePath = '$sourcePath/src/modules/ping';
     // VCL
-    if (modularCLI.options.containsKey('--vcl')) {
-      vcl = modularCLI.options['--vcl'] ?? false;
+    if (cli.options.containsKey('--vcl')) {
+      isVCL = cli.options['--vcl'] ?? false;
     }
     // Horse
-    if (modularCLI.options.containsKey('--horse')) {
-      horse = modularCLI.options['--horse'] ?? false;
+    if (cli.options.containsKey('--horse')) {
+      isHorse = cli.options['--horse'] ?? false;
     }
-    if (horse) {
-      _createProjectHorse(projectPath, fileName, modularCLI);
-      _createAppModule('$projectPath/src', 'app', modularCLI);
-      _createRouteHandleHorse(sourcePath, 'ping', modularCLI);
-    } else if (vcl) {
-      _createProjectVCL(projectPath, fileName, modularCLI);
-      _createAppModule('$projectPath/src', 'app', modularCLI);
-      _createRouteHandle(sourcePath, 'ping', modularCLI);
+    if (isHorse) {
+      _createProjectHorse(projectPath, fileName, cli);
+      _createAppModule('$projectPath/src', 'app', cli);
+      _createRouteHandleHorse(sourcePath, 'ping', cli);
+    } else if (isVCL) {
+      _createProjectVCL(projectPath, fileName, cli);
+      _createAppModule('$projectPath/src', 'app', cli);
+      _createRouteHandle(sourcePath, 'ping', cli);
     } else {
-      _createProject(projectPath, fileName, modularCLI);
-      _createAppModule('$projectPath/src', 'app', modularCLI);
-      _createRouteHandle(sourcePath, 'ping', modularCLI);
+      _createProject(projectPath, fileName, cli);
+      _createAppModule('$projectPath/src', 'app', cli);
+      _createRouteHandle(sourcePath, 'ping', cli);
     }
-    _createModule(sourcePath, 'ping', modularCLI);
-    _createController('$sourcePath/controllers', 'ping', modularCLI);
-    _createService('$sourcePath/services', 'ping', modularCLI);
+    _createModule(sourcePath, 'ping', cli);
+    _createController('$sourcePath/controllers', 'ping', cli);
+    _createService('$sourcePath/services', 'ping', cli);
     return this;
   }
 
-  void _createProject(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
+  void _createProject(final String dirName, final String fileName, final ICLI cli) {
     final projectConsole = CommandGenerateProjectConsole();
-    projectConsole.execute(dirName, fileName, modularCLI);
+    projectConsole.execute(dirName, fileName, cli);
   }
 
-  void _createAppModule(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
-    modularCLI.commands['g']?['m']?.value
-        ?.execute(dirName, fileName, modularCLI);
+  void _createAppModule(final String dirName, final String fileName, final ICLI cli) {
+    cli.commandList['g']?['m']?.value?.execute(dirName, fileName, cli);
   }
 
-  void _createModule(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
-    modularCLI.commands['g']?['m']?.value
-        ?.execute(dirName, fileName, modularCLI);
+  void _createModule(final String dirName, final String fileName, final ICLI cli) {
+    cli.commandList['g']?['m']?.value?.execute(dirName, fileName, cli);
   }
 
-  void _createController(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
-    modularCLI.commands['g']?['c']?.value
-        ?.execute(dirName, fileName, modularCLI);
+  void _createController(final String dirName, final String fileName, final ICLI cli) {
+    cli.commandList['g']?['c']?.value?.execute(dirName, fileName, cli);
   }
 
-  void _createService(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
-    modularCLI.commands['g']?['s']?.value
-        ?.execute(dirName, fileName, modularCLI);
+  void _createService(final String dirName, final String fileName, final ICLI cli) {
+    cli.commandList['g']?['s']?.value?.execute(dirName, fileName, cli);
   }
 
-  static void _createProjectHorse(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
-    modularCLI.commandsExtra['horse-app']?.value
-        ?.execute(dirName, fileName, modularCLI);
+  void _createProjectHorse(final String dirName, final String fileName, final ICLI cli) {
+    cli.commandsInternal['horse-app']?.value?.execute(dirName, fileName, cli);
   }
 
-  static void _createRouteHandleHorse(final String dirName,
-      final String fileName, final IModularCLI modularCLI) {
-    modularCLI.commandsExtra['horse-handler']?.value
-        ?.execute(dirName, fileName, modularCLI);
+  void _createRouteHandleHorse(final String dirName, final String fileName, final ICLI cli) {
+    cli.commandsInternal['horse-handler']?.value?.execute(dirName, fileName, cli);
   }
 
-  static void _createRouteHandle(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
-    modularCLI.commandsExtra['handler']?.value
-        ?.execute(dirName, fileName, modularCLI);
+  void _createRouteHandle(final String dirName, final String fileName, final ICLI cli) {
+    cli.commandsInternal['handler']?.value?.execute(dirName, fileName, cli);
   }
 
-  static void _createProjectVCL(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
+  void _createProjectVCL(final String dirName, final String fileName, final ICLI cli) {
     final formVCL = CommandGenerateFormVCL();
     final unitVCL = CommandGenerateUnitVCL();
-    modularCLI.commandsExtra['vcl-app']?.value
-        ?.execute(dirName, fileName, modularCLI);
-    formVCL.execute(dirName, fileName, modularCLI);
-    unitVCL.execute(dirName, fileName, modularCLI);
+    cli.commandsInternal['vcl-app']?.value?.execute(dirName, fileName, cli);
+    formVCL.execute(dirName, fileName, cli);
+    unitVCL.execute(dirName, fileName, cli);
   }
 }

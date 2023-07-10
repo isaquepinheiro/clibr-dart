@@ -5,8 +5,7 @@ import '../dmfbr.interfaces.dart';
 
 class CommandModule implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
+  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
     final bool isAppModule = fileName.toLowerCase() == 'app';
     String modulePath = dirName;
     bool isGuard = false;
@@ -22,17 +21,16 @@ class CommandModule implements ICommand {
       Directory(modulePath).createSync(recursive: true);
     }
     // Options - Guard
-    if (modularCLI.options.containsKey('--guard')) {
-      isGuard = modularCLI.options['--guard'] ?? false;
-    } else if (modularCLI.options.containsKey('-gu')) {
-      isGuard = modularCLI.options['-gu'] ?? false;
+    if (cli.options.containsKey('--guard')) {
+      isGuard = cli.options['--guard'] ?? false;
+    } else if (cli.options.containsKey('-gu')) {
+      isGuard = cli.options['-gu'] ?? false;
     }
     final String unitName = fileName.toLowerCase();
     final String className = fileName[0].toUpperCase() + fileName.substring(1);
     final String moduleName = 'T${className}Module';
-    final String templateFilePath = isAppModule == true
-        ? './templates/module.app.txt'
-        : './templates/module.txt';
+    final String templateFilePath =
+        isAppModule == true ? './templates/module.app.txt' : './templates/module.txt';
     final String templateFileName = '$modulePath/$unitName.module.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     String modifiedContent = templateContent
@@ -42,20 +40,17 @@ class CommandModule implements ICommand {
 
     modifiedContent = modifiedContent
         .replaceFirst('{guardCode}', _generateGuardBody(className, isGuard))
-        .replaceFirst(
-            '{guardHeader}', _generateGuardHeader(className, isGuard));
+        .replaceFirst('{guardHeader}', _generateGuardHeader(className, isGuard));
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
-    Utils.printCreate(
-        'CREATE', templateFileName, Utils.getSizeFile(templateFileName));
+    Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
     return this;
   }
 
   String _generateGuardBody(final String className, final bool isGuard) {
     final String templateFilePath = './templates/guards/body.txt';
     final String templateContent = File(templateFilePath).readAsStringSync();
-    final String modifiedContent =
-        templateContent.replaceAll('{className}', 'T$className');
+    final String modifiedContent = templateContent.replaceAll('{className}', 'T$className');
 
     return isGuard ? modifiedContent : '';
   }
@@ -63,8 +58,7 @@ class CommandModule implements ICommand {
   String _generateGuardHeader(final String className, final bool isGuard) {
     final String templateFilePath = './templates/guards/header.txt';
     final String templateContent = File(templateFilePath).readAsStringSync();
-    final String modifiedContent =
-        templateContent.replaceAll('{className}', 'T$className');
+    final String modifiedContent = templateContent.replaceAll('{className}', 'T$className');
 
     return isGuard ? modifiedContent : '';
   }

@@ -9,7 +9,7 @@ uses
   dmfbr.transform.interfaces;
 
 type
-  {className} = class(TTransformPipe)
+  {pipeName} = class(TTransformPipe)
   public
     function Transform(const Value: TValue;
       const Metadata: ITransformArguments): TResultTransform; override;
@@ -17,9 +17,9 @@ type
 
 implementation
 
-{ {className} }
+{ {pipeName} }
 
-function {className}.Transform(const Value: TValue;
+function {pipeName}.Transform(const Value: TValue;
   const Metadata: ITransformArguments): TResultTransform;
 begin
   // success

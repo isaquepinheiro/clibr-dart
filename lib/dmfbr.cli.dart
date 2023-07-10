@@ -1,54 +1,53 @@
-import 'package:dmfbr/commands/dmfbr.command.h.dart';
-import 'package:dmfbr/commands/dmfbr.command.v.dart';
-import 'package:dmfbr/commands/horse/dmfbr.command.dpr.horse.dart';
-
+import 'dmfbr.interfaces.dart';
+import 'core/dmfbr.command.pair.dart';
 import 'commands/dmfbr.command.all.dart';
 import 'commands/dmfbr.command.c.dart';
 import 'commands/dmfbr.command.dpr.dart';
+import 'commands/dmfbr.command.h.dart';
 import 'commands/dmfbr.command.handler.dart';
 import 'commands/dmfbr.command.pipe.dart';
-import 'commands/horse/dmfbr.command.handler.horse.dart';
+import 'commands/dmfbr.command.v.dart';
 import 'commands/dmfbr.command.i.dart';
 import 'commands/dmfbr.command.m.dart';
 import 'commands/dmfbr.command.info.dart';
 import 'commands/dmfbr.command.r.dart';
 import 'commands/dmfbr.command.s.dart';
 import 'commands/vcl/dmfbr.command.dpr.vcl.dart';
-import 'core/dmfbr.command.pair.dart';
-import 'dmfbr.interfaces.dart';
+import 'commands/horse/dmfbr.command.dpr.horse.dart';
+import 'commands/horse/dmfbr.command.handler.horse.dart';
 
-class ModularCLI implements IModularCLI {
-  late Map<String, CommandPair> _commandsNew;
-  late Map<String, CommandPair> _commandsVersion;
-  late Map<String, CommandPair> _commandsHelp;
-  late Map<String, CommandPair> _commandsGenerate;
-  late Map<String, CommandPair> _commandsExtra;
-  late Map<String, Map<String, CommandPair>> _commands;
-  late Map<String, bool> _commandsOptions;
-  late String _command;
-  final List<String> _commandsExecute = [];
+class CLI implements ICLI {
+  late Map<String, CommandPair> _argumentsNew;
+  late Map<String, CommandPair> _argumentsVersion;
+  late Map<String, CommandPair> _argumentsHelp;
+  late Map<String, CommandPair> _argumentsGenerate;
+  late Map<String, CommandPair> _argumentsInternal;
+  late Map<String, Map<String, CommandPair>> _commandList;
+  late Map<String, bool> _options;
+  late String _commandExecuted;
+  final List<String> _argumentList = [];
 
-  ModularCLI() {
-    _commandsVersion = {
+  CLI() {
+    _argumentsVersion = {
       '--version': CommandPair(false, CommandVersion()),
       '-v': CommandPair(false, CommandVersion()),
     };
 
-    _commandsHelp = {
+    _argumentsHelp = {
       'info': CommandPair(false, CommandInfo()),
       'i': CommandPair(false, CommandInfo()),
       '--help': CommandPair(false, CommandHelp()),
       '-h': CommandPair(false, CommandHelp()),
     };
 
-    _commandsNew = {
+    _argumentsNew = {
       'application': CommandPair(false, CommandGenerateProject()),
       'app': CommandPair(false, CommandGenerateProject()),
       '--help': CommandPair(false, CommandHelp()),
       '-h': CommandPair(false, CommandHelp()),
     };
 
-    _commandsGenerate = {
+    _argumentsGenerate = {
       'module': CommandPair(false, CommandModule()),
       'm': CommandPair(false, CommandModule()),
       'controller': CommandPair(false, CommandController()),
@@ -66,49 +65,49 @@ class ModularCLI implements IModularCLI {
       '--all': CommandPair(false, CommandAll()),
     };
 
-    _commandsOptions = {
+    _options = {
       '--guard': false,
       '-gu': false,
       '--horse': false,
       '--vcl': false,
     };
 
-    _commandsExtra = {
+    _argumentsInternal = {
       'handler': CommandPair(false, CommandRouteHandler()),
       'horse-app': CommandPair(false, CommandGenerateProjectHorse()),
       'horse-handler': CommandPair(false, CommandRouteHandlerHorse()),
       'vcl-app': CommandPair(false, CommandGenerateProjectVCL()),
     };
 
-    _commands = {
-      'new': _commandsNew,
-      'n': _commandsNew,
-      'generate': _commandsGenerate,
-      'g': _commandsGenerate,
-      'info': _commandsHelp,
-      'i': _commandsHelp,
-      '--help': _commandsHelp,
-      '-h': _commandsHelp,
-      '--version': _commandsVersion,
-      '-v': _commandsVersion,
+    _commandList = {
+      'new': _argumentsNew,
+      'n': _argumentsNew,
+      'generate': _argumentsGenerate,
+      'g': _argumentsGenerate,
+      'info': _argumentsHelp,
+      'i': _argumentsHelp,
+      '--help': _argumentsHelp,
+      '-h': _argumentsHelp,
+      '--version': _argumentsVersion,
+      '-v': _argumentsVersion,
     };
   }
 
   @override
-  Map<String, Map<String, CommandPair>> get commands => _commands;
+  Map<String, Map<String, CommandPair>> get commandList => _commandList;
 
   @override
-  List<String> get commandsExecute => _commandsExecute;
+  List<String> get argumentList => _argumentList;
 
   @override
-  Map<String, bool> get options => _commandsOptions;
+  Map<String, bool> get options => _options;
 
   @override
-  Map<String, CommandPair> get commandsExtra => _commandsExtra;
+  Map<String, CommandPair> get commandsInternal => _argumentsInternal;
 
   @override
-  String get command => _command;
+  String get commandExecuted => _commandExecuted;
 
   @override
-  set command(String value) => _command = value;
+  set commandExecuted(String value) => _commandExecuted = value;
 }

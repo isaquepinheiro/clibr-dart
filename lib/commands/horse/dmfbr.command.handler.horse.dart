@@ -5,8 +5,7 @@ import '../../dmfbr.interfaces.dart';
 
 class CommandRouteHandlerHorse implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
+  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
     String handlerPath = dirName;
 
     if ((handlerPath.isEmpty) || (handlerPath == '.')) {
@@ -20,11 +19,11 @@ class CommandRouteHandlerHorse implements ICommand {
       Directory(handlerPath).createSync(recursive: true);
     }
     final String unitName = fileName.toLowerCase();
+    final String className = fileName[0].toUpperCase() + fileName.substring(1);
+    final String handlerName = 'T${className}RouteHandler';
     final String templateFilePath = './templates/horse/horse.handler.txt';
     final String templateFileName = '$handlerPath/$unitName.route.handler.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
-    final String className = fileName[0].toUpperCase() + fileName.substring(1);
-    final String handlerName = 'T${className}RouteHandler';
     final String modifiedContent = templateContent
         .replaceFirst('{unitName}', unitName)
         .replaceAll('{handlerName}', handlerName)
@@ -32,8 +31,7 @@ class CommandRouteHandlerHorse implements ICommand {
 
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
-    Utils.printCreate(
-        'CREATE', templateFileName, Utils.getSizeFile(templateFileName));
+    Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
     return this;
   }
 }

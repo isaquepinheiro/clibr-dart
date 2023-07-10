@@ -4,8 +4,7 @@ import '../../dmfbr.interfaces.dart';
 
 class CommandGenerateFormVCL implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
+  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
     final String unitName = fileName.toLowerCase();
     final String templateFilePath = './templates/vcl/vcl.project.form.txt';
     final String templateFileName = '$dirName/u$unitName.dfm';
@@ -13,8 +12,7 @@ class CommandGenerateFormVCL implements ICommand {
 
     File(templateFileName).writeAsStringSync(templateContent);
     // Console
-    Utils.printCreate(
-        'CREATE', templateFileName, Utils.getSizeFile(templateFileName));
+    Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
     return this;
   }
 }

@@ -4,9 +4,8 @@ import '../../dmfbr.interfaces.dart';
 
 class CommandGenerateProjectVCL implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
-    final String unitName = fileName[0].toLowerCase() + fileName.substring(1);
+  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
+    final String unitName = fileName.toLowerCase();
     final String programName = unitName.replaceAll(RegExp(r'[-]'), '_');
     final String templateFilePath = './templates/vcl/vcl.project.txt';
     final String templateFileName = '$dirName/$unitName.dpr';
@@ -17,8 +16,7 @@ class CommandGenerateProjectVCL implements ICommand {
 
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
-    Utils.printCreate(
-        'CREATE', templateFileName, Utils.getSizeFile(templateFileName));
+    Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
     return this;
   }
 }

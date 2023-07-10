@@ -10,9 +10,9 @@
             "type": "dart",
             "program": "bin/dmfbr.dart",
             "args": [
-                "g",
-                "m",
-                "produto"
+                "new",
+                "app",
+                "test"
             ]
         }
     ]

@@ -1,15 +1,14 @@
 import 'core/dmfbr.command.pair.dart';
 
 abstract interface class ICommand {
-  ICommand? execute(final String dirName, final String filename,
-      final IModularCLI modularCLI);
+  ICommand? execute(final String dirName, final String filename, final ICLI cli);
 }
 
-abstract interface class IModularCLI {
-  String get command;
-  set command(String value);
-  Map<String, Map<String, CommandPair>> get commands;
-  Map<String, CommandPair> get commandsExtra;
+abstract interface class ICLI {
+  String get commandExecuted;
+  set commandExecuted(String value);
+  Map<String, Map<String, CommandPair>> get commandList;
+  Map<String, CommandPair> get commandsInternal;
   Map<String, bool> get options;
-  List<String> get commandsExecute;
+  List<String> get argumentList;
 }

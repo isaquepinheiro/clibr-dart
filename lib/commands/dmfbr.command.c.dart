@@ -4,8 +4,7 @@ import '../dmfbr.interfaces.dart';
 
 class CommandController implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName,
-      final IModularCLI modularCLI) {
+  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
     String controllerPath = dirName;
 
     if ((controllerPath.isEmpty) || (controllerPath == '.')) {
@@ -31,8 +30,7 @@ class CommandController implements ICommand {
 
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
-    Utils.printCreate(
-        'CREATE', templateFileName, Utils.getSizeFile(templateFileName));
+    Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
     return this;
   }
 }

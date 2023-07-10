@@ -1,49 +1,55 @@
+import 'package:dmfbr/core/dmfbr.command.pair.dart';
 import 'package:dmfbr/core/dmfbr.utils.dart';
 import 'package:dmfbr/dmfbr.cli.dart';
+import 'package:dmfbr/dmfbr.interfaces.dart';
 import 'package:path/path.dart' as path;
 
 void main(List<String> arguments) {
-  final modularCli = ModularCLI();
-  var dirName = '';
-  var fileName = '';
-  var commandName = '';
-  var isOK = false;
-  // Commands
-  for (var iFor = 0; iFor < arguments.length; iFor++) {
+  final ICLI cli = CLI();
+  String dirName = '';
+  String fileName = '';
+  String commandName = '';
+  bool isFound = false;
+  // Command find
+  for (int iFor = 0; iFor < arguments.length; iFor++) {
     commandName = arguments[iFor];
-    if (modularCli.commands.containsKey(commandName)) {
+
+    if (cli.commandList.containsKey(commandName)) {
       break;
     }
   }
-  modularCli.command = commandName;
-  // Command found
-  var commands = modularCli.commands[modularCli.command] ?? {};
-  // Arguments find
-  for (var iFor = 0; iFor < arguments.length; iFor++) {
-    var flagName = arguments[iFor];
-    // Argument command
-    if (commands.containsKey(flagName)) {
-      modularCli.commandsExecute.add(flagName);
-    } else if (modularCli.options.containsKey(flagName)) {
-      modularCli.options[flagName] = true;
+  // Set command executed
+  cli.commandExecuted = commandName;
+  // Command list
+  final Map<String, CommandPair> argumentList = cli.commandList[cli.commandExecuted] ?? {};
+  // Argument find
+  for (int iFor = 0; iFor < arguments.length; iFor++) {
+    final String argName = arguments[iFor];
+
+    if (argumentList.containsKey(argName)) {
+      cli.argumentList.add(argName);
+    } else if (cli.options.containsKey(argName)) {
+      cli.options[argName] = true;
     } else {
       dirName = path.dirname(arguments[iFor]);
       fileName = path.basename(arguments[iFor]);
+      if (dirName == '.') {
+        dirName = '$dirName/$fileName';
+      }
     }
   }
   // Command execute
-  for (var key in modularCli.commandsExecute) {
-    if (commands[key]?.value == null) {
+  for (final String key in cli.argumentList) {
+    if (argumentList[key]?.value == null) {
       continue;
     }
-    var result = commands[key]?.value?.execute(dirName, fileName, modularCli);
-    if (result != null) {
-      isOK = true;
+    final ICommand? resultExecute = argumentList[key]?.value?.execute(dirName, fileName, cli);
+    if (resultExecute != null) {
+      isFound = true;
     }
   }
-  if (!isOK) {
-    Utils.printAlert(
-        'Error: unknown command "${modularCli.command}" for "dmfbr"');
+  if (!isFound) {
+    Utils.printAlert('Error: unknown command "${cli.commandExecuted}" for "dmfbr"');
     Utils.printAlert('Run \'dmfbr --help\' for usage.');
   }
 }
