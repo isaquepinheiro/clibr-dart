@@ -7,7 +7,7 @@ class CommandGenerateProjectVCL implements ICommand {
   ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
     final String unitName = fileName.toLowerCase();
     final String programName = unitName.replaceAll(RegExp(r'[-]'), '_');
-    final String templateFilePath = './templates/vcl/vcl.project.txt';
+    final String templateFilePath = '${cli.pathEXE}/vcl.project.pas';
     final String templateFileName = '$dirName/$unitName.dpr';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent

@@ -21,7 +21,7 @@ class CommandRouteHandlerHorse implements ICommand {
     final String unitName = fileName.toLowerCase();
     final String className = fileName[0].toUpperCase() + fileName.substring(1);
     final String handlerName = 'T${className}RouteHandler';
-    final String templateFilePath = './templates/horse/horse.handler.txt';
+    final String templateFilePath = '${cli.pathEXE}/horse.handler.pas';
     final String templateFileName = '$handlerPath/$unitName.route.handler.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent

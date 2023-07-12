@@ -20,7 +20,7 @@ class CommandTransformPipe implements ICommand {
     final String unitName = fileName[0].toLowerCase();
     final String className = fileName[0].toUpperCase() + fileName.substring(1);
     final String pipeName = 'TParse${className}Pipe';
-    final String templateFilePath = './templates/pipe.txt';
+    final String templateFilePath = '${cli.pathEXE}/pipe.pas';
     final String templateFileName = '$pipePath/$unitName.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent =

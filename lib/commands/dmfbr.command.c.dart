@@ -18,7 +18,7 @@ class CommandController implements ICommand {
       Directory(controllerPath).createSync(recursive: true);
     }
     final String unitName = fileName.toLowerCase();
-    final String templateFilePath = './templates/controller.txt';
+    final String templateFilePath = '${cli.pathEXE}/controller.pas';
     final String templateFileName = '$controllerPath/$unitName.controller.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String className = fileName[0].toUpperCase() + fileName.substring(1);

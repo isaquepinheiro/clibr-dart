@@ -22,8 +22,8 @@ class CommandAll implements ICommand {
     }
     sourcePath = '$sourcePath/modules/$fileName';
     // Horse
-    if (cli.options.containsKey('--horse')) {
-      isHorse = cli.options['--horse'] ?? false;
+    if (cli.tags.containsKey('--horse')) {
+      isHorse = cli.tags['--horse'] ?? false;
     }
     if (isHorse) {
       _createRouteHandleHorse(sourcePath, fileName, cli);
@@ -37,22 +37,22 @@ class CommandAll implements ICommand {
   }
 
   void _createModule(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandList['g']?['m']?.value?.execute(dirName, fileName, cli);
+    cli.commands['g']?['m']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createController(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandList['g']?['c']?.value?.execute(dirName, fileName, cli);
+    cli.commands['g']?['c']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createService(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandList['g']?['s']?.value?.execute(dirName, fileName, cli);
+    cli.commands['g']?['s']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createRouteHandleHorse(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandsInternal['horse-handler']?.value?.execute(dirName, fileName, cli);
+    cli.optionsInternal['horse-handler']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createRouteHandle(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandsInternal['handler']?.value?.execute(dirName, fileName, cli);
+    cli.optionsInternal['handler']?.value?.execute(dirName, fileName, cli);
   }
 }

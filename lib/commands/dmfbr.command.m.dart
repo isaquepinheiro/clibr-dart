@@ -21,16 +21,16 @@ class CommandModule implements ICommand {
       Directory(modulePath).createSync(recursive: true);
     }
     // Options - Guard
-    if (cli.options.containsKey('--guard')) {
-      isGuard = cli.options['--guard'] ?? false;
-    } else if (cli.options.containsKey('-gu')) {
-      isGuard = cli.options['-gu'] ?? false;
+    if (cli.tags.containsKey('--guard')) {
+      isGuard = cli.tags['--guard'] ?? false;
+    } else if (cli.tags.containsKey('-gu')) {
+      isGuard = cli.tags['-gu'] ?? false;
     }
     final String unitName = fileName.toLowerCase();
     final String className = fileName[0].toUpperCase() + fileName.substring(1);
     final String moduleName = 'T${className}Module';
     final String templateFilePath =
-        isAppModule == true ? './templates/module.app.txt' : './templates/module.txt';
+        isAppModule == true ? '${cli.pathEXE}/module.app.pas' : '${cli.pathEXE}/module.pas';
     final String templateFileName = '$modulePath/$unitName.module.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     String modifiedContent = templateContent
@@ -39,24 +39,24 @@ class CommandModule implements ICommand {
         .replaceAll('{className}', className);
 
     modifiedContent = modifiedContent
-        .replaceFirst('{guardCode}', _generateGuardBody(className, isGuard))
-        .replaceFirst('{guardHeader}', _generateGuardHeader(className, isGuard));
+        .replaceFirst('{guardCode}', _generateGuardBody(className, isGuard, cli))
+        .replaceFirst('{guardHeader}', _generateGuardHeader(className, isGuard, cli));
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
     Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
     return this;
   }
 
-  String _generateGuardBody(final String className, final bool isGuard) {
-    final String templateFilePath = './templates/guards/body.txt';
+  String _generateGuardBody(final String className, final bool isGuard, final ICLI cli) {
+    final String templateFilePath = '${cli.pathEXE}/body.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent.replaceAll('{className}', 'T$className');
 
     return isGuard ? modifiedContent : '';
   }
 
-  String _generateGuardHeader(final String className, final bool isGuard) {
-    final String templateFilePath = './templates/guards/header.txt';
+  String _generateGuardHeader(final String className, final bool isGuard, final ICLI cli) {
+    final String templateFilePath = '${cli.pathEXE}/header.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent.replaceAll('{className}', 'T$className');
 

@@ -6,7 +6,7 @@ class CommandGenerateUnitVCL implements ICommand {
   @override
   ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
     final String unitName = fileName.toLowerCase();
-    final String templateFilePath = './templates/vcl/vcl.project.unit.txt';
+    final String templateFilePath = '${cli.pathEXE}/vcl.project.unit.pas';
     final String templateFileName = '$dirName/u$unitName.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent.replaceFirst('{unitName}', unitName);

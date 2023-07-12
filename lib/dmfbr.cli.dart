@@ -1,3 +1,4 @@
+import 'commands/dmfbr.command.templates.dart';
 import 'dmfbr.interfaces.dart';
 import 'core/dmfbr.command.pair.dart';
 import 'commands/dmfbr.command.all.dart';
@@ -17,37 +18,40 @@ import 'commands/horse/dmfbr.command.dpr.horse.dart';
 import 'commands/horse/dmfbr.command.handler.horse.dart';
 
 class CLI implements ICLI {
-  late Map<String, CommandPair> _argumentsNew;
-  late Map<String, CommandPair> _argumentsVersion;
-  late Map<String, CommandPair> _argumentsHelp;
-  late Map<String, CommandPair> _argumentsGenerate;
-  late Map<String, CommandPair> _argumentsInternal;
-  late Map<String, Map<String, CommandPair>> _commandList;
-  late Map<String, bool> _options;
+  late Map<String, CommandPair> _optionsNew;
+  late Map<String, CommandPair> _optionsVersion;
+  late Map<String, CommandPair> _optionsHelp;
+  late Map<String, CommandPair> _optionsGenerate;
+  late Map<String, CommandPair> _optionsInternal;
+  late Map<String, Map<String, CommandPair>> _commands;
+  late Map<String, bool> _tags;
   late String _commandExecuted;
-  final List<String> _argumentList = [];
+  final String pathBin;
+  final List<String> _options = [];
 
-  CLI() {
-    _argumentsVersion = {
+  CLI(this.pathBin) {
+    _optionsVersion = {
       '--version': CommandPair(false, CommandVersion()),
       '-v': CommandPair(false, CommandVersion()),
     };
 
-    _argumentsHelp = {
+    _optionsHelp = {
       'info': CommandPair(false, CommandInfo()),
       'i': CommandPair(false, CommandInfo()),
       '--help': CommandPair(false, CommandHelp()),
       '-h': CommandPair(false, CommandHelp()),
+      '--templates': CommandPair(false, CommandTemplates()),
+      '-t': CommandPair(false, CommandTemplates()),
     };
 
-    _argumentsNew = {
+    _optionsNew = {
       'application': CommandPair(false, CommandGenerateProject()),
       'app': CommandPair(false, CommandGenerateProject()),
       '--help': CommandPair(false, CommandHelp()),
       '-h': CommandPair(false, CommandHelp()),
     };
 
-    _argumentsGenerate = {
+    _optionsGenerate = {
       'module': CommandPair(false, CommandModule()),
       'm': CommandPair(false, CommandModule()),
       'controller': CommandPair(false, CommandController()),
@@ -65,49 +69,54 @@ class CLI implements ICLI {
       '--all': CommandPair(false, CommandAll()),
     };
 
-    _options = {
+    _tags = {
       '--guard': false,
       '-gu': false,
       '--horse': false,
       '--vcl': false,
     };
 
-    _argumentsInternal = {
+    _optionsInternal = {
       'handler': CommandPair(false, CommandRouteHandler()),
       'horse-app': CommandPair(false, CommandGenerateProjectHorse()),
       'horse-handler': CommandPair(false, CommandRouteHandlerHorse()),
       'vcl-app': CommandPair(false, CommandGenerateProjectVCL()),
     };
 
-    _commandList = {
-      'new': _argumentsNew,
-      'n': _argumentsNew,
-      'generate': _argumentsGenerate,
-      'g': _argumentsGenerate,
-      'info': _argumentsHelp,
-      'i': _argumentsHelp,
-      '--help': _argumentsHelp,
-      '-h': _argumentsHelp,
-      '--version': _argumentsVersion,
-      '-v': _argumentsVersion,
+    _commands = {
+      'new': _optionsNew,
+      'n': _optionsNew,
+      'generate': _optionsGenerate,
+      'g': _optionsGenerate,
+      'info': _optionsHelp,
+      'i': _optionsHelp,
+      '--help': _optionsHelp,
+      '-h': _optionsHelp,
+      '--templates': _optionsHelp,
+      '-t': _optionsHelp,
+      '--version': _optionsVersion,
+      '-v': _optionsVersion,
     };
   }
 
   @override
-  Map<String, Map<String, CommandPair>> get commandList => _commandList;
+  Map<String, Map<String, CommandPair>> get commands => _commands;
 
   @override
-  List<String> get argumentList => _argumentList;
+  List<String> get options => _options;
 
   @override
-  Map<String, bool> get options => _options;
+  Map<String, bool> get tags => _tags;
 
   @override
-  Map<String, CommandPair> get commandsInternal => _argumentsInternal;
+  Map<String, CommandPair> get optionsInternal => _optionsInternal;
 
   @override
   String get commandExecuted => _commandExecuted;
 
   @override
   set commandExecuted(String value) => _commandExecuted = value;
+
+  @override
+  String get pathEXE => '$pathBin/templates';
 }

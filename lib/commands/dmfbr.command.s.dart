@@ -21,7 +21,7 @@ class CommandService implements ICommand {
     final String unitName = fileName.toLowerCase();
     final String className = fileName[0].toUpperCase() + fileName.substring(1);
     final String controllerName = 'T${className}Service';
-    final String templateFilePath = './templates/service.txt';
+    final String templateFilePath = '${cli.pathEXE}/service.pas';
     final String templateFileName = '$servicePath/$unitName.service.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent

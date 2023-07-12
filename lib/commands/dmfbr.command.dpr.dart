@@ -26,12 +26,12 @@ class CommandGenerateProject implements ICommand {
     }
     sourcePath = '$sourcePath/src/modules/ping';
     // VCL
-    if (cli.options.containsKey('--vcl')) {
-      isVCL = cli.options['--vcl'] ?? false;
+    if (cli.tags.containsKey('--vcl')) {
+      isVCL = cli.tags['--vcl'] ?? false;
     }
     // Horse
-    if (cli.options.containsKey('--horse')) {
-      isHorse = cli.options['--horse'] ?? false;
+    if (cli.tags.containsKey('--horse')) {
+      isHorse = cli.tags['--horse'] ?? false;
     }
     if (isHorse) {
       _createProjectHorse(projectPath, fileName, cli);
@@ -58,37 +58,37 @@ class CommandGenerateProject implements ICommand {
   }
 
   void _createAppModule(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandList['g']?['m']?.value?.execute(dirName, fileName, cli);
+    cli.commands['g']?['m']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createModule(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandList['g']?['m']?.value?.execute(dirName, fileName, cli);
+    cli.commands['g']?['m']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createController(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandList['g']?['c']?.value?.execute(dirName, fileName, cli);
+    cli.commands['g']?['c']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createService(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandList['g']?['s']?.value?.execute(dirName, fileName, cli);
+    cli.commands['g']?['s']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createProjectHorse(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandsInternal['horse-app']?.value?.execute(dirName, fileName, cli);
+    cli.optionsInternal['horse-app']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createRouteHandleHorse(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandsInternal['horse-handler']?.value?.execute(dirName, fileName, cli);
+    cli.optionsInternal['horse-handler']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createRouteHandle(final String dirName, final String fileName, final ICLI cli) {
-    cli.commandsInternal['handler']?.value?.execute(dirName, fileName, cli);
+    cli.optionsInternal['handler']?.value?.execute(dirName, fileName, cli);
   }
 
   void _createProjectVCL(final String dirName, final String fileName, final ICLI cli) {
     final formVCL = CommandGenerateFormVCL();
     final unitVCL = CommandGenerateUnitVCL();
-    cli.commandsInternal['vcl-app']?.value?.execute(dirName, fileName, cli);
+    cli.optionsInternal['vcl-app']?.value?.execute(dirName, fileName, cli);
     formVCL.execute(dirName, fileName, cli);
     unitVCL.execute(dirName, fileName, cli);
   }

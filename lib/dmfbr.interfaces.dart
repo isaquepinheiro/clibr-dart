@@ -7,8 +7,9 @@ abstract interface class ICommand {
 abstract interface class ICLI {
   String get commandExecuted;
   set commandExecuted(String value);
-  Map<String, Map<String, CommandPair>> get commandList;
-  Map<String, CommandPair> get commandsInternal;
-  Map<String, bool> get options;
-  List<String> get argumentList;
+  String get pathEXE;
+  Map<String, Map<String, CommandPair>> get commands;
+  Map<String, CommandPair> get optionsInternal;
+  Map<String, bool> get tags;
+  List<String> get options;
 }

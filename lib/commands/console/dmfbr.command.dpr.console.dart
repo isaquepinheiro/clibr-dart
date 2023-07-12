@@ -8,7 +8,7 @@ class CommandGenerateProjectConsole implements ICommand {
     final String unitName = fileName.toLowerCase();
     final String className = fileName[0].toUpperCase() + fileName.substring(1);
     final String programName = className.replaceAll(RegExp(r'[-]'), '_');
-    final String templateFilePath = './templates/console/console.project.txt';
+    final String templateFilePath = '${cli.pathEXE}/console.project.pas';
     final String templateFileName = '$dirName/$unitName.dpr';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent.replaceFirst('{programName}', programName);
