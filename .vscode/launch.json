@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "DMFBr CLI",
+            "name": "CLIBr",
             "request": "launch",
             "type": "dart",
-            "program": "bin/dmfbr.dart",
+            "program": "bin/clibr.dart",
             "args": [
                 "new",
                 "app",

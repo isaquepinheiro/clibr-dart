@@ -1,5 +1,5 @@
-import 'package:dmfbr/core/dmfbr.utils.dart';
-import 'package:dmfbr/dmfbr.interfaces.dart';
+import '../clibr.interfaces.dart';
+import '../core/clibr.utils.dart';
 
 class CommandHelp implements ICommand {
   @override
@@ -16,7 +16,7 @@ class CommandHelp implements ICommand {
 
   void _executeInternal() {
     List<String> helpText = [];
-    helpText.add('DMFBr CLI');
+    helpText.add('CLIBr');
     helpText.add('dmfbr [command] [options] [filename] [tags]');
     helpText.add('\u001b[36m' 'commands:' '\u001b[0m');
     helpText.add('  dmfbr n, new app       create new project');
@@ -42,7 +42,7 @@ class CommandHelp implements ICommand {
 
   void _executeInternalG() {
     List<String> helpText = [];
-    helpText.add('DMFBr CLI');
+    helpText.add('CLIBr');
     helpText.add('dmfbr generate [option] [filename] [tags]');
     helpText.add('\u001b[35m' 'commands:' '\u001b[0m');
     helpText.add('  g, generate    generates the desired option');
@@ -69,7 +69,7 @@ class CommandHelp implements ICommand {
 
   void _executeInternalN() {
     List<String> helpText = [];
-    helpText.add('DMFBr CLI');
+    helpText.add('CLIBr');
     helpText.add('dmfbr new [option] [filename] [tags]');
     helpText.add('\u001b[32m' 'commands:' '\u001b[0m');
     helpText.add('  n, new         generates a new project');

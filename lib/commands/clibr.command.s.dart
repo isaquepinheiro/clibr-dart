@@ -1,33 +1,32 @@
 import 'dart:io';
 
-import '../../core/dmfbr.utils.dart';
-import '../../dmfbr.interfaces.dart';
+import '../core/clibr.utils.dart';
+import '../clibr.interfaces.dart';
 
-class CommandRouteHandlerHorse implements ICommand {
+class CommandService implements ICommand {
   @override
   ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
-    String handlerPath = dirName;
+    String servicePath = dirName;
 
-    if ((handlerPath.isEmpty) || (handlerPath == '.')) {
-      handlerPath = './';
+    if ((servicePath.isEmpty) || (servicePath == '.')) {
+      servicePath = './';
     }
     if (fileName.isEmpty) {
       print('Invalid parameters!');
       return null;
     }
-    if (!Directory(handlerPath).existsSync()) {
-      Directory(handlerPath).createSync(recursive: true);
+    if (!Directory(servicePath).existsSync()) {
+      Directory(servicePath).createSync(recursive: true);
     }
     final String unitName = fileName.toLowerCase();
     final String className = fileName[0].toUpperCase() + fileName.substring(1);
-    final String handlerName = 'T${className}RouteHandler';
-    final String templateFilePath = '${cli.pathEXE}/horse.handler.pas';
-    final String templateFileName = '$handlerPath/$unitName.route.handler.pas';
+    final String controllerName = 'T${className}Service';
+    final String templateFilePath = '${cli.pathEXE}/service.pas';
+    final String templateFileName = '$servicePath/$unitName.service.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent
         .replaceFirst('{unitName}', unitName)
-        .replaceAll('{handlerName}', handlerName)
-        .replaceAll('{className}', className);
+        .replaceAll('{serviceName}', controllerName);
 
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console

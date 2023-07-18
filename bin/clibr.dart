@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:dmfbr/core/dmfbr.command.pair.dart';
-import 'package:dmfbr/core/dmfbr.utils.dart';
-import 'package:dmfbr/dmfbr.cli.dart';
-import 'package:dmfbr/dmfbr.interfaces.dart';
+import 'package:clibr/clibr.dart';
+import 'package:clibr/clibr.interfaces.dart';
+import 'package:clibr/core/clibr.command.pair.dart';
+import 'package:clibr/core/clibr.utils.dart';
 import 'package:path/path.dart' as path;
 
 void main(List<String> arguments) {

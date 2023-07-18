@@ -1,4 +1,4 @@
-import '../dmfbr.interfaces.dart';
+import '../clibr.interfaces.dart';
 
 class CommandPair {
   bool key;

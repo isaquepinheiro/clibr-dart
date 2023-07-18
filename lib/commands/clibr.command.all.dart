@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../dmfbr.interfaces.dart';
+import '../clibr.interfaces.dart';
 
 class CommandAll implements ICommand {
   @override

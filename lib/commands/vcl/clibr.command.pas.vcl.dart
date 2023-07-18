@@ -1,6 +1,6 @@
 import 'dart:io';
-import '../../core/dmfbr.utils.dart';
-import '../../dmfbr.interfaces.dart';
+import '../../core/clibr.utils.dart';
+import '../../clibr.interfaces.dart';
 
 class CommandGenerateUnitVCL implements ICommand {
   @override

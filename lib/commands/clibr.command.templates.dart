@@ -1,5 +1,5 @@
-import 'package:dmfbr/core/dmfbr.utils.dart';
-import 'package:dmfbr/dmfbr.interfaces.dart';
+import '../clibr.interfaces.dart';
+import '../core/clibr.utils.dart';
 
 class CommandTemplates implements ICommand {
   @override

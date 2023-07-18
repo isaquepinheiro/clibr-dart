@@ -1,4 +1,4 @@
-import 'core/dmfbr.command.pair.dart';
+import 'core/clibr.command.pair.dart';
 
 abstract interface class ICommand {
   ICommand? execute(final String dirName, final String filename, final ICLI cli);

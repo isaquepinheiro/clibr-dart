@@ -3,5 +3,5 @@
 .dart_tool/
 bin/app/
 bin/*.zip
-bin/dmfbr_*
-bin/dmfbr.exe
+bin/clibr_*
+bin/clibr.exe

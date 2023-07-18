@@ -1,7 +1,6 @@
 import 'dart:io';
-import 'package:dmfbr/core/dmfbr.utils.dart';
-
-import '../dmfbr.interfaces.dart';
+import '../clibr.interfaces.dart';
+import '../core/clibr.utils.dart';
 
 class CommandModule implements ICommand {
   @override

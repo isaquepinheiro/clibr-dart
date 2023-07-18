@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import '../dmfbr.interfaces.dart';
-import 'console/dmfbr.command.dpr.console.dart';
-import 'vcl/dmfbr.command.dfm.vcl.dart';
-import 'vcl/dmfbr.command.pas.vcl.dart';
+import '../clibr.interfaces.dart';
+import 'console/clibr.command.dpr.console.dart';
+import 'vcl/clibr.command.dfm.vcl.dart';
+import 'vcl/clibr.command.pas.vcl.dart';
 
 class CommandGenerateProject implements ICommand {
   @override

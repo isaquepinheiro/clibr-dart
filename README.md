@@ -1,37 +1,37 @@
-<p align="center">DMFBr Framework for Delphi, para construção de aplicativos eficientes e escaláveis.</p>
+<p align="center">ModularBr Framework for Delphi, para construção de aplicativos eficientes e escaláveis.</p>
 <p align="center">
   <img src="assets/cli.jfif" alt="super CLI" width="100%">
 </p>
 
 # Description
-O DMFBr CLI é uma ferramenta de linha de comando que ajuda a inicializar, desenvolver e manter suas aplicações que usa o DMFBr. Ele auxilia de várias maneiras, incluindo a criação da estrutura básica do projeto. Ele incorpora padrões arquiteturais de boas práticas para incentivar a criação de aplicativos bem estruturados.
+O CLIBr é uma ferramenta de linha de comando que ajuda a inicializar, desenvolver e manter suas aplicações que usa o ModularBr. Ele auxilia de várias maneiras, incluindo a criação da estrutura básica do projeto. Ele incorpora padrões arquiteturais de boas práticas para incentivar a criação de aplicativos bem estruturados.
 
 ### Getting started
 
 Installation:
- * Download [setup](https://github.com/isaquepinheiro/dmfbr_cli/releases)
- * Just type `dmfbr` in cmd
+ * Download [setup](https://github.com/isaquepinheiro/clibr_cli/releases)
+ * Just type `clibr` in cmd
  
 ## Available Commands
 
 ### > New
 This command initialize a new project.
 ```
-dmfbr new app my_api
+clibr new app my_api
 ```
 ###### Aliases: n
 
 ### > Informations
 This command show the client informations
 ```
-dmfbr info
+clibr info
 ```
 ###### Aliases: i
 
 ### > Version
 This command show the client version
 ```
-dmfbr --version
+clibr --version
 ```
 ###### Aliases: -v
 
@@ -40,13 +40,13 @@ dmfbr --version
 ### > --vcl --horse, --guard 
 This flag defines new project partner Horse or VCL
 ```
-dmfbr new app my_api --horse
-dmfbr new app my_api --vcl
+clibr new app my_api --horse
+clibr new app my_api --vcl
 ```
 ### > Help
-This is a helper for dmfbr. Use `dmfbr <command> --help` for more information about a command.
+This is a helper for clibr. Use `clibr <command> --help` for more information about a command.
 ```
-dmfbr --help
+clibr --help
 ```
 ###### Aliases: -h
 
@@ -58,9 +58,9 @@ generate           Generate files handler/module/controller/service
 
 ## Samples
 ```
-dmfbr g module product
-dmfbr g controller product
-dmfbr g service product
+clibr g module product
+clibr g controller product
+clibr g service product
 ```
 
 

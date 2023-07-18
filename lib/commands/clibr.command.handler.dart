@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../../core/dmfbr.utils.dart';
-import '../../dmfbr.interfaces.dart';
+import '../core/clibr.utils.dart';
+import '../clibr.interfaces.dart';
 
 class CommandRouteHandler implements ICommand {
   @override
