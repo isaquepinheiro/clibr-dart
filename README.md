@@ -9,7 +9,7 @@ O CLIBr é uma ferramenta de linha de comando que ajuda a inicializar, desenvolv
 ### Getting started
 
 Installation:
- * Download [setup](https://github.com/isaquepinheiro/clibr_cli/releases)
+ * Download [setup](https://github.com/isaquepinheiro/clibr/releases)
  * Just type `clibr` in cmd
  
 ## Available Commands
