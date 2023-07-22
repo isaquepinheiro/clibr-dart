@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:clibr/clibr.dart';
+import 'package:clibr/clibr.cmd.dart';
 import 'package:clibr/clibr.interfaces.dart';
 import 'package:clibr/core/clibr.command.pair.dart';
 import 'package:clibr/core/clibr.utils.dart';
