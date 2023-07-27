@@ -1,7 +1,7 @@
 import 'core/clibr.command.pair.dart';
 
 abstract interface class ICommand {
-  ICommand? execute(final String dirName, final String filename, final ICLI cli);
+  ICommand? execute(final String dirName, final String fileName, final ICLI cli);
 }
 
 abstract interface class ICLI {
@@ -11,5 +11,5 @@ abstract interface class ICLI {
   Map<String, Map<String, CommandPair>> get commands;
   Map<String, CommandPair> get optionsInternal;
   Map<String, bool> get tags;
-  List<String> get options;
+  List<String> get updates;
 }

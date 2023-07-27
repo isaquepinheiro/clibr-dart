@@ -17,13 +17,13 @@ class CommandHelp implements ICommand {
   void _executeInternal() {
     List<String> helpText = [];
     helpText.add('CLIBr');
-    helpText.add('dmfbr [command] [options] [filename] [tags]');
+    helpText.add('clibr [command] [options] [filename] [tags]');
     helpText.add('\u001b[36m' 'commands:' '\u001b[0m');
-    helpText.add('  dmfbr n, new app       create new project');
-    helpText.add('  dmfbr g, generate      create new file');
-    helpText.add('  dmfbr -h, --help       show help');
-    helpText.add('  dmfbr -v, --version    show version');
-    helpText.add('  dmfbr -t, --templates  show templates');
+    helpText.add('  clibr n, new app       create new project');
+    helpText.add('  clibr g, generate      create new file');
+    helpText.add('  clibr -h, --help       show help');
+    helpText.add('  clibr -v, --version    show version');
+    helpText.add('  clibr -t, --templates  show templates');
     helpText.add('\u001b[31m' 'options:' '\u001b[0m');
     helpText.add('  app, application');
     helpText.add('  handler, module, controller, service');
@@ -43,7 +43,7 @@ class CommandHelp implements ICommand {
   void _executeInternalG() {
     List<String> helpText = [];
     helpText.add('CLIBr');
-    helpText.add('dmfbr generate [option] [filename] [tags]');
+    helpText.add('clibr generate [option] [filename] [tags]');
     helpText.add('\u001b[35m' 'commands:' '\u001b[0m');
     helpText.add('  g, generate    generates the desired option');
     helpText.add('\u001b[31m' 'options:' '\u001b[0m');
@@ -53,11 +53,11 @@ class CommandHelp implements ICommand {
     helpText.add('  --horse        creates a new project using the Horse pattern');
     helpText.add('  -gu, --guard   adds security guards');
     helpText.add('\u001b[36m' 'samples:' '\u001b[0m');
-    helpText.add('  dmfbr g handler products');
-    helpText.add('  dmfbr g module products');
-    helpText.add('  dmfbr g controller products');
-    helpText.add('  dmfbr g service products');
-    helpText.add('  dmfbr g --all products');
+    helpText.add('  clibr g handler products');
+    helpText.add('  clibr g module products');
+    helpText.add('  clibr g controller products');
+    helpText.add('  clibr g service products');
+    helpText.add('  clibr g --all products');
     helpText.add('\u001b[33m'
         'For more information, please refer to the documentation.'
         '\u001b[0m');
@@ -70,7 +70,7 @@ class CommandHelp implements ICommand {
   void _executeInternalN() {
     List<String> helpText = [];
     helpText.add('CLIBr');
-    helpText.add('dmfbr new [option] [filename] [tags]');
+    helpText.add('clibr new [option] [filename] [tags]');
     helpText.add('\u001b[32m' 'commands:' '\u001b[0m');
     helpText.add('  n, new         generates a new project');
     helpText.add('\u001b[31m' 'options:' '\u001b[0m');
@@ -79,9 +79,9 @@ class CommandHelp implements ICommand {
     helpText.add('  --horse        creates a new project using the Horse pattern');
     helpText.add('  -gu, --guard   adds security guards');
     helpText.add('\u001b[36m' 'samples:' '\u001b[0m');
-    helpText.add('  dmfbr n app app_ping');
-    helpText.add('  dmfbr n app app_ping --horse');
-    helpText.add('  dmfbr n app app_ping --guard');
+    helpText.add('  clibr n app app_ping');
+    helpText.add('  clibr n app app_ping --horse');
+    helpText.add('  clibr n app app_ping --guard');
     helpText.add('\u001b[33m'
         'For more information, please refer to the documentation.'
         '\u001b[0m');

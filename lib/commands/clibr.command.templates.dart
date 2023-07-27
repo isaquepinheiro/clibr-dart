@@ -11,7 +11,7 @@ class CommandTemplates implements ICommand {
   void _executeInternal() {
     List<String> helpText = [];
     helpText.add('|-----------------------|');
-    helpText.add('| DMFBr CLI - Templates |');
+    helpText.add('| CLIBr CLI - Templates |');
     helpText.add('|-----------------------|------------------------------------------|');
     helpText.add('|        Name         	|               Descripton                 |');
     helpText.add('|-----------------------|------------------------------------------|');

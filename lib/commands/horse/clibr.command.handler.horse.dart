@@ -32,6 +32,9 @@ class CommandRouteHandlerHorse implements ICommand {
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
     Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
+    // Lista Update DPR
+    cli.updates.add(
+        '  $unitName.route.handler in \'src\\modules\\$fileName\\$unitName.route.handler.pas\',');
     return this;
   }
 }

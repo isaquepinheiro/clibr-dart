@@ -43,6 +43,8 @@ class CommandModule implements ICommand {
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
     Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
+    // Lista Update DPR
+    cli.updates.add('  $unitName.module in \'src\\modules\\$fileName\\$unitName.module.pas\',');
     return this;
   }
 

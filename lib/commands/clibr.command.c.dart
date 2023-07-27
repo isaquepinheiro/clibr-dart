@@ -31,6 +31,9 @@ class CommandController implements ICommand {
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
     Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
+    // Lista Update DPR
+    cli.updates
+        .add('  $unitName.controller in \'src\\modules\\$fileName\\$unitName.controller.pas\',');
     return this;
   }
 }

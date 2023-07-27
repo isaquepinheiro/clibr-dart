@@ -27,7 +27,7 @@ class CLI implements ICLI {
   late Map<String, bool> _tags;
   late String _commandExecuted;
   final String pathBin;
-  final List<String> _options = [];
+  final List<String> _updates = [];
 
   CLI(this.pathBin) {
     _optionsVersion = {
@@ -103,7 +103,7 @@ class CLI implements ICLI {
   Map<String, Map<String, CommandPair>> get commands => _commands;
 
   @override
-  List<String> get options => _options;
+  List<String> get updates => _updates;
 
   @override
   Map<String, bool> get tags => _tags;
