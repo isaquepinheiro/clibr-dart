@@ -1,6 +1,6 @@
-import 'commands/clibr.command.templates.dart';
 import 'clibr.interfaces.dart';
 import 'core/clibr.command.pair.dart';
+import 'commands/clibr.command.templates.dart';
 import 'commands/clibr.command.all.dart';
 import 'commands/clibr.command.c.dart';
 import 'commands/clibr.command.dpr.dart';
@@ -17,9 +17,9 @@ import 'commands/vcl/clibr.command.dpr.vcl.dart';
 import 'commands/horse/clibr.command.dpr.horse.dart';
 import 'commands/horse/clibr.command.handler.horse.dart';
 
-class CLI implements ICLI {
+class Cli implements ICli {
   late Map<String, CommandPair> _optionsNew;
-  late Map<String, CommandPair> _optionsVersion;
+  late Map<String, CommandPair> _optionsInfos;
   late Map<String, CommandPair> _optionsHelp;
   late Map<String, CommandPair> _optionsGenerate;
   late Map<String, CommandPair> _optionsInternal;
@@ -29,58 +29,59 @@ class CLI implements ICLI {
   final String pathBin;
   final List<String> _updates = [];
 
-  CLI(this.pathBin) {
-    _optionsVersion = {
-      '--version': CommandPair(false, CommandVersion()),
-      '-v': CommandPair(false, CommandVersion()),
+  Cli(this.pathBin) {
+    _optionsInfos = {
+      'version': CommandPair(CommandVersion()),
+      'v': CommandPair(CommandVersion()),
+      'info': CommandPair(CommandInfo()),
+      'i': CommandPair(CommandInfo()),
+      'templates': CommandPair(CommandTemplates()),
+      't': CommandPair(CommandTemplates()),
     };
 
     _optionsHelp = {
-      'info': CommandPair(false, CommandInfo()),
-      'i': CommandPair(false, CommandInfo()),
-      '--help': CommandPair(false, CommandHelp()),
-      '-h': CommandPair(false, CommandHelp()),
-      '--templates': CommandPair(false, CommandTemplates()),
-      '-t': CommandPair(false, CommandTemplates()),
+      '--help': CommandPair(CommandHelp()),
+      '-h': CommandPair(CommandHelp()),
     };
 
     _optionsNew = {
-      'application': CommandPair(false, CommandGenerateProject()),
-      'app': CommandPair(false, CommandGenerateProject()),
-      '--help': CommandPair(false, CommandHelp()),
-      '-h': CommandPair(false, CommandHelp()),
+      'application': CommandPair(CommandGenerateProject()),
+      'app': CommandPair(CommandGenerateProject()),
+      'new': CommandPair(CommandGenerateProject()),
+      '--help': CommandPair(CommandHelp()),
+      '-h': CommandPair(CommandHelp()),
     };
 
     _optionsGenerate = {
-      'module': CommandPair(false, CommandModule()),
-      'm': CommandPair(false, CommandModule()),
-      'controller': CommandPair(false, CommandController()),
-      'c': CommandPair(false, CommandController()),
-      'service': CommandPair(false, CommandService()),
-      's': CommandPair(false, CommandService()),
-      'repository': CommandPair(false, CommandRepository()),
-      'r': CommandPair(false, CommandRepository()),
-      'infra': CommandPair(false, CommandInfra()),
-      'i': CommandPair(false, CommandInfra()),
-      'pipe': CommandPair(false, CommandTransformPipe()),
-      'p': CommandPair(false, CommandTransformPipe()),
-      '--help': CommandPair(false, CommandHelp()),
-      '-h': CommandPair(false, CommandHelp()),
-      '--all': CommandPair(false, CommandAll()),
+      'module': CommandPair(CommandModule()),
+      'm': CommandPair(CommandModule()),
+      'controller': CommandPair(CommandController()),
+      'c': CommandPair(CommandController()),
+      'service': CommandPair(CommandService()),
+      's': CommandPair(CommandService()),
+      'repository': CommandPair(CommandRepository()),
+      'r': CommandPair(CommandRepository()),
+      'infra': CommandPair(CommandInfra()),
+      'i': CommandPair(CommandInfra()),
+      'pipe': CommandPair(CommandTransformPipe()),
+      'p': CommandPair(CommandTransformPipe()),
+      'all': CommandPair(CommandAll()),
+      '--help': CommandPair(CommandHelp()),
+      '-h': CommandPair(CommandHelp()),
     };
 
     _tags = {
-      '--guard': false,
       '-gu': false,
+      '--guard': false,
       '--horse': false,
       '--vcl': false,
     };
 
     _optionsInternal = {
-      'handler': CommandPair(false, CommandRouteHandler()),
-      'horse-app': CommandPair(false, CommandGenerateProjectHorse()),
-      'horse-handler': CommandPair(false, CommandRouteHandlerHorse()),
-      'vcl-app': CommandPair(false, CommandGenerateProjectVCL()),
+      'handler': CommandPair(CommandRouteHandler()),
+      'horse-app': CommandPair(CommandGenerateProjectHorse()),
+      'horse-handler': CommandPair(CommandRouteHandlerHorse()),
+      'vcl-app': CommandPair(CommandGenerateProjectVCL()),
     };
 
     _commands = {
@@ -88,14 +89,14 @@ class CLI implements ICLI {
       'n': _optionsNew,
       'generate': _optionsGenerate,
       'g': _optionsGenerate,
-      'info': _optionsHelp,
-      'i': _optionsHelp,
+      'info': _optionsInfos,
+      'i': _optionsInfos,
+      'templates': _optionsInfos,
+      't': _optionsInfos,
+      'version': _optionsInfos,
+      'v': _optionsInfos,
       '--help': _optionsHelp,
       '-h': _optionsHelp,
-      '--templates': _optionsHelp,
-      '-t': _optionsHelp,
-      '--version': _optionsVersion,
-      '-v': _optionsVersion,
     };
   }
 
@@ -118,5 +119,5 @@ class CLI implements ICLI {
   set commandExecuted(String value) => _commandExecuted = value;
 
   @override
-  String get pathEXE => '$pathBin/templates';
+  String get pathCLI => '$pathBin/templates';
 }

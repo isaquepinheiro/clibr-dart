@@ -8,11 +8,7 @@ uses
   System.SysUtils,
   Horse,
   horse.modular,
-  app.module in 'src\app.module.pas',
-  ping.route.handler in 'src\modules\ping\ping.route.handler.pas',
-  ping.module in 'src\modules\ping\ping.module.pas',
-  ping.controller in 'src\modules\ping\controllers\ping.controller.pas',
-  ping.service in 'src\modules\ping\services\ping.service.pas';
+  app.module in 'src\app.module.pas';
 
 begin
   {$IFDEF MSWINDOWS}

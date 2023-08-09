@@ -3,7 +3,7 @@ import '../core/clibr.utils.dart';
 
 class CommandHelp implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
+  bool execute(final String dirName, final String fileName, final ICli cli) {
     if ((cli.commandExecuted == 'generate') || (cli.commandExecuted == 'g')) {
       _executeInternalG();
     } else if ((cli.commandExecuted == 'new') || (cli.commandExecuted == 'n')) {
@@ -11,83 +11,93 @@ class CommandHelp implements ICommand {
     } else {
       _executeInternal();
     }
-    return this;
+    return true;
   }
 
   void _executeInternal() {
-    List<String> helpText = [];
-    helpText.add('CLIBr');
-    helpText.add('clibr [command] [options] [filename] [tags]');
-    helpText.add('\u001b[36m' 'commands:' '\u001b[0m');
-    helpText.add('  clibr n, new app       create new project');
-    helpText.add('  clibr g, generate      create new file');
-    helpText.add('  clibr -h, --help       show help');
-    helpText.add('  clibr -v, --version    show version');
-    helpText.add('  clibr -t, --templates  show templates');
-    helpText.add('\u001b[31m' 'options:' '\u001b[0m');
-    helpText.add('  app, application');
-    helpText.add('  handler, module, controller, service');
-    helpText.add('  --all          create all');
-    helpText.add('\u001b[32m' 'tags:' '\u001b[0m');
-    helpText.add('  --horse        creates a new project using the Horse pattern');
-    helpText.add('  -gu, --guard   adds security guards');
-    helpText.add('\u001b[33m'
+    List<String> printText = [];
+    printText.add('CLIBr');
+    printText.add('Usage: clibr <command> [argument] [filename] [tag]');
+    printText.add('\u001b[36m' 'commands:' '\u001b[0m');
+    printText.add('  n, new           create new delphi project (console default)');
+    printText.add('  g, generate      create new argument');
+    printText.add('  v, version       show version');
+    printText.add('  i, info          show informations');
+    printText.add('  t, templates     show templates');
+    printText.add('\u001b[31m' 'arguments:' '\u001b[0m');
+    printText.add('  app, application create new delphi project');
+    printText.add('  handler          create route handle');
+    printText.add('  module           create module');
+    printText.add('  controller       create controller');
+    printText.add('  service          create service');
+    printText.add('  all              create all (handler, module, controller and service)');
+    printText.add('\u001b[32m' 'tags:' '\u001b[0m');
+    printText.add('  --vcl            create new project VCL pattern');
+    printText.add('  --horse          create new project Horse pattern (console)');
+    printText.add('  -gu, --guard     add security guards');
+    printText.add('  -h, --help       show help');
+    printText.add('\u001b[33m'
         'For more information, please refer to the documentation.'
         '\u001b[0m');
-    helpText.add('\u001b[34m' 'https://dmfbr-en.docs-br.com' '\u001b[0m');
-    helpText.add('');
+    printText.add('\u001b[34m' 'https://dmfbr-en.docs-br.com' '\u001b[0m');
+    printText.add('');
 
-    Utils.printHelp(helpText.join('\n'));
+    Utils.printHelp(printText.join('\n'));
   }
 
   void _executeInternalG() {
-    List<String> helpText = [];
-    helpText.add('CLIBr');
-    helpText.add('clibr generate [option] [filename] [tags]');
-    helpText.add('\u001b[35m' 'commands:' '\u001b[0m');
-    helpText.add('  g, generate    generates the desired option');
-    helpText.add('\u001b[31m' 'options:' '\u001b[0m');
-    helpText.add('  handler, module, controller, service');
-    helpText.add('  --all          create all');
-    helpText.add('\u001b[32m' 'tags:' '\u001b[0m');
-    helpText.add('  --horse        creates a new project using the Horse pattern');
-    helpText.add('  -gu, --guard   adds security guards');
-    helpText.add('\u001b[36m' 'samples:' '\u001b[0m');
-    helpText.add('  clibr g handler products');
-    helpText.add('  clibr g module products');
-    helpText.add('  clibr g controller products');
-    helpText.add('  clibr g service products');
-    helpText.add('  clibr g --all products');
-    helpText.add('\u001b[33m'
+    List<String> printText = [];
+    printText.add('CLIBr');
+    printText.add('Usage: clibr g <argument> <filename> [tag]');
+    printText.add('\u001b[35m' 'commands:' '\u001b[0m');
+    printText.add('  g, generate      generates the desired argument');
+    printText.add('\u001b[31m' 'arguments:' '\u001b[0m');
+    printText.add('  handler          create route handle');
+    printText.add('  module           create module');
+    printText.add('  controller       create controller');
+    printText.add('  service          create service');
+    printText.add('  all              create all (handler, module, controller and service)');
+    printText.add('\u001b[32m' 'tags:' '\u001b[0m');
+    printText.add('  --horse          create Horse pattern (console)');
+    printText.add('  -gu, --guard     adds security guards');
+    printText.add('  -h, --help       show help');
+    printText.add('\u001b[36m' 'samples:' '\u001b[0m');
+    printText.add('  clibr g handler products');
+    printText.add('  clibr g module products --horse --guard');
+    printText.add('  clibr g controller products');
+    printText.add('  clibr g service products');
+    printText.add('  clibr g all products');
+    printText.add('\u001b[33m'
         'For more information, please refer to the documentation.'
         '\u001b[0m');
-    helpText.add('\u001b[34m' 'https://dmfbr-en.docs-br.com' '\u001b[0m');
-    helpText.add('');
+    printText.add('\u001b[34m' 'https://dmfbr-en.docs-br.com' '\u001b[0m');
+    printText.add('');
 
-    Utils.printHelp(helpText.join('\n'));
+    Utils.printHelp(printText.join('\n'));
   }
 
   void _executeInternalN() {
-    List<String> helpText = [];
-    helpText.add('CLIBr');
-    helpText.add('clibr new [option] [filename] [tags]');
-    helpText.add('\u001b[32m' 'commands:' '\u001b[0m');
-    helpText.add('  n, new         generates a new project');
-    helpText.add('\u001b[31m' 'options:' '\u001b[0m');
-    helpText.add('  app, application');
-    helpText.add('\u001b[35m' 'tags:' '\u001b[0m');
-    helpText.add('  --horse        creates a new project using the Horse pattern');
-    helpText.add('  -gu, --guard   adds security guards');
-    helpText.add('\u001b[36m' 'samples:' '\u001b[0m');
-    helpText.add('  clibr n app app_ping');
-    helpText.add('  clibr n app app_ping --horse');
-    helpText.add('  clibr n app app_ping --guard');
-    helpText.add('\u001b[33m'
+    List<String> printText = [];
+    printText.add('CLIBr');
+    printText.add('Usage: clibr n <argument> <filename> [tag]');
+    printText.add('\u001b[32m' 'commands:' '\u001b[0m');
+    printText.add('  n, new           create new delphi project (console default)');
+    printText.add('\u001b[31m' 'arguments:' '\u001b[0m');
+    printText.add('  app, application');
+    printText.add('\u001b[35m' 'tags:' '\u001b[0m');
+    printText.add('  --horse          create Horse pattern');
+    printText.add('  -gu, --guard     adds security guards');
+    printText.add('  -h, --help       show help');
+    printText.add('\u001b[36m' 'samples:' '\u001b[0m');
+    printText.add('  clibr n app app_ping');
+    printText.add('  clibr n app app_ping --horse');
+    printText.add('  clibr n app app_ping --guard');
+    printText.add('\u001b[33m'
         'For more information, please refer to the documentation.'
         '\u001b[0m');
-    helpText.add('\u001b[34m' 'https://dmfbr-en.docs-br.com' '\u001b[0m');
-    helpText.add('');
+    printText.add('\u001b[34m' 'https://dmfbr-en.docs-br.com' '\u001b[0m');
+    printText.add('');
 
-    Utils.printHelp(helpText.join('\n'));
+    Utils.printHelp(printText.join('\n'));
   }
 }

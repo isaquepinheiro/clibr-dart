@@ -3,35 +3,35 @@ import '../core/clibr.utils.dart';
 
 class CommandTemplates implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
+  bool execute(final String dirName, final String fileName, final ICli cli) {
     _executeInternal();
-    return this;
+    return true;
   }
 
   void _executeInternal() {
-    List<String> helpText = [];
-    helpText.add('|-----------------------|');
-    helpText.add('| CLIBr CLI - Templates |');
-    helpText.add('|-----------------------|------------------------------------------|');
-    helpText.add('|        Name         	|               Descripton                 |');
-    helpText.add('|-----------------------|------------------------------------------|');
-    helpText.add('| handler.pas           | Default Route Handler                    |');
-    helpText.add('| module.app.pas        | Default Application Module               |');
-    helpText.add('| module.pas            | Default Modules                          |');
-    helpText.add('| controller.pas        | Default Controller                       |');
-    helpText.add('| service.pas           | Default Service                          |');
-    helpText.add('| vcl.project.pas       | Default VCL Server Project           	   |');
-    helpText.add('| vcl.project.unit.pas 	| Default VCL Server Unit                  |');
-    helpText.add('| vcl.project.form.pas 	| Default VCL Server Form              	   |');
-    helpText.add('| console.projetc.pas 	| Default Console Project              	   |');
-    helpText.add('| horse.project.pas   	| Horse Pattern Projec                     |');
-    helpText.add('| horse.handler.pas   	| Horse Pattern Route Handler              |');
-    helpText.add('| body.pas              | Guad Routes Body                         |');
-    helpText.add('| header.pas            | Guad Routes Header                       |');
-    helpText.add('| pipe.pas              | Pipe (Transformation/Validation)         |');
-    helpText.add('|-----------------------|------------------------------------------|');
-    helpText.add('');
+    List<String> printText = [];
+    printText.add('|-----------------------|');
+    printText.add('| CLIBr CLI - Templates |');
+    printText.add('|-----------------------|------------------------------------------|');
+    printText.add('|        Name         	|               Descripton                 |');
+    printText.add('|-----------------------|------------------------------------------|');
+    printText.add('| handler.pas           | Default Route Handler                    |');
+    printText.add('| module.app.pas        | Default Application Module               |');
+    printText.add('| module.pas            | Default Modules                          |');
+    printText.add('| controller.pas        | Default Controller                       |');
+    printText.add('| service.pas           | Default Service                          |');
+    printText.add('| vcl.project.pas       | Default VCL Server Project           	   |');
+    printText.add('| vcl.project.unit.pas 	| Default VCL Server Unit                  |');
+    printText.add('| vcl.project.form.pas 	| Default VCL Server Form              	   |');
+    printText.add('| console.projetc.pas 	| Default Console Project              	   |');
+    printText.add('| horse.project.pas   	| Horse Pattern Projec                     |');
+    printText.add('| horse.handler.pas   	| Horse Pattern Route Handler              |');
+    printText.add('| body.pas              | Guad Routes Body                         |');
+    printText.add('| header.pas            | Guad Routes Header                       |');
+    printText.add('| pipe.pas              | Pipe (Transformation/Validation)         |');
+    printText.add('|-----------------------|------------------------------------------|');
+    printText.add('');
 
-    Utils.printHelp(helpText.join('\n'));
+    Utils.printHelp(printText.join('\n'));
   }
 }

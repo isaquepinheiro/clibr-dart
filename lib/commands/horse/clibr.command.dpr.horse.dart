@@ -4,11 +4,15 @@ import '../../clibr.interfaces.dart';
 
 class CommandGenerateProjectHorse implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
+  bool execute(final String dirName, final String fileName, final ICli cli) {
+    if (fileName.isEmpty) {
+      print('Invalid parameters!');
+      return false;
+    }
     final String unitName = fileName.toLowerCase();
-    final String className = fileName[0].toUpperCase() + fileName.substring(1);
-    final String programName = className.replaceAll(RegExp(r'[-]'), '_');
-    final String templateFilePath = '${cli.pathEXE}/horse.project.pas';
+    final String camelCaseName = fileName[0].toUpperCase() + fileName.substring(1);
+    final String programName = camelCaseName.replaceAll(RegExp(r'[-]'), '_');
+    final String templateFilePath = '${cli.pathCLI}/horse.project.pas';
     final String templateFileName = '$dirName/$unitName.dpr';
     final String templateContent = File(templateFilePath).readAsStringSync();
     final String modifiedContent = templateContent.replaceFirst('{programName}', programName);
@@ -16,6 +20,6 @@ class CommandGenerateProjectHorse implements ICommand {
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
     Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
-    return this;
+    return true;
   }
 }

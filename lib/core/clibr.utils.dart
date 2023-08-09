@@ -40,4 +40,8 @@ class Utils {
     final int size = file.lengthSync();
     return '(${size.toString()} bytes)';
   }
+
+  static String version() {
+    return '0.0.1';
+  }
 }

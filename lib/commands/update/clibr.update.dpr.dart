@@ -4,8 +4,8 @@ import '../../core/clibr.utils.dart';
 
 class CommandUpdateDpr implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
-    final Directory currentDir = Directory.current;
+  bool execute(final String dirName, final String fileName, final ICli cli) {
+    final Directory currentDir = Directory('${Directory.current}/$dirName');
     final List<FileSystemEntity> files = currentDir.listSync();
     String dprFilePath = '';
 
@@ -15,9 +15,11 @@ class CommandUpdateDpr implements ICommand {
         break;
       }
     }
-    if (dprFilePath == '') {
-      return this;
+
+    if (dprFilePath.isEmpty) {
+      return false;
     }
+
     final File fileProject = File(dprFilePath);
     final List<String> lines = fileProject.readAsLinesSync();
     // Find "Uses"
@@ -28,6 +30,7 @@ class CommandUpdateDpr implements ICommand {
         break;
       }
     }
+
     // Find ";"
     if (usesIndex != -1) {
       int semicolonIndex = -1;
@@ -37,6 +40,7 @@ class CommandUpdateDpr implements ICommand {
           break;
         }
       }
+
       if (semicolonIndex != -1) {
         lines[semicolonIndex] = lines[semicolonIndex].replaceAll(';', ',');
         for (final String unitName in cli.updates) {
@@ -52,12 +56,11 @@ class CommandUpdateDpr implements ICommand {
         Utils.printUpdate(
             'UPDATE', './${fileProject.uri.pathSegments.last}', Utils.getSizeFile(dprFilePath));
       } else {
-        Utils.printAlert(
-            'Erro: ponto e vírgula não encontrado após a cláusula "uses" no arquivo DPR.');
+        Utils.printAlert('Error: Semicolon not found after the "uses" clause in the DPR file.');
       }
     } else {
-      Utils.printAlert('Erro: cláusula "uses" não encontrada no arquivo DPR.');
+      Utils.printAlert('Error: "uses" clause not found in the DPR file.');
     }
-    return this;
+    return true;
   }
 }

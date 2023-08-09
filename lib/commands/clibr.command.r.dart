@@ -2,8 +2,8 @@ import '../clibr.interfaces.dart';
 
 class CommandRepository implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String filename, final ICLI cli) {
+  bool execute(final String dirName, final String filename, final ICli cli) {
     print('Repository');
-    return this;
+    return true;
   }
 }

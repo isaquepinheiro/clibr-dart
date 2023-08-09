@@ -3,32 +3,33 @@ import '../core/clibr.utils.dart';
 
 class CommandInfo implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
+  bool execute(final String dirName, final String fileName, final ICli cli) {
     _executeInternal();
-    return this;
+    return true;
   }
 
   void _executeInternal() {
-    List<String> helpText = [];
-    helpText.add(' ______   ____    ____  ________  ______              ______  _____     _____  ');
-    helpText
+    List<String> printText = [];
+    printText
+        .add(' ______   ____    ____  ________  ______              ______  _____     _____  ');
+    printText
         .add('|_   _ `. |_  \\  /   _||_   __  ||_   _ \\           .\' ___  ||_   _|   |_   _| ');
-    helpText.add(
+    printText.add(
         '  | | `. \\ |   \\/   |    | |_ \\_|  | |_) | _ .--.  / .\'   \\_|  | |       | |   ');
-    helpText
+    printText
         .add('  | |  | | | |\\  /| |    |  _|     |  __\'.[ `/\'`\\] | |         | |   _   | |   ');
-    helpText.add(
+    printText.add(
         ' _| |_.\' /_| |_\\/_| |_  _| |_     _| |__) || |     \\ `.___.\'\\ _| |__/ | _| |_  ');
-    helpText
+    printText
         .add('|______.\'|_____||_____||_____|   |_______/[___]     `.____ .\'|________||_____| ');
-    helpText.add('');
-    helpText.add('  Version: 0.0.1');
-    helpText.add('  Author: Isaque Pinheiro');
-    helpText.add('  Email: isaquesp@gmail.com');
-    helpText.add('  Github: https://github.com/HashLoad/DMFBr');
-    helpText.add('  Documentation: https://dmfbr-en.docs-br.com');
-    helpText.add('');
+    printText.add('');
+    printText.add('  Version: ${Utils.version()}');
+    printText.add('  Author: Isaque Pinheiro');
+    printText.add('  Email: isaquesp@gmail.com');
+    printText.add('  Github: https://github.com/HashLoad/DMFBr');
+    printText.add('  Documentation: https://dmfbr-en.docs-br.com');
+    printText.add('');
 
-    Utils.printHelp(helpText.join('\n'));
+    Utils.printHelp(printText.join('\n'));
   }
 }

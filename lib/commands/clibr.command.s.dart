@@ -5,34 +5,34 @@ import '../clibr.interfaces.dart';
 
 class CommandService implements ICommand {
   @override
-  ICommand? execute(final String dirName, final String fileName, final ICLI cli) {
-    String servicePath = dirName;
-
-    if ((servicePath.isEmpty) || (servicePath == '.')) {
-      servicePath = './';
-    }
+  bool execute(final String dirName, final String fileName, final ICli cli) {
     if (fileName.isEmpty) {
       print('Invalid parameters!');
-      return null;
-    }
-    if (!Directory(servicePath).existsSync()) {
-      Directory(servicePath).createSync(recursive: true);
+      return false;
     }
     final String unitName = fileName.toLowerCase();
-    final String className = fileName[0].toUpperCase() + fileName.substring(1);
-    final String controllerName = 'T${className}Service';
-    final String templateFilePath = '${cli.pathEXE}/service.pas';
-    final String templateFileName = '$servicePath/$unitName.service.pas';
+    final String camelCaseName = fileName[0].toUpperCase() + fileName.substring(1);
+    final String className = 'T${camelCaseName}Service';
+    String sourcePath = dirName;
+
+    if ((sourcePath.isEmpty) || (sourcePath == '.')) {
+      sourcePath = './';
+    }
+
+    if (!Directory(sourcePath).existsSync()) {
+      Directory(sourcePath).createSync(recursive: true);
+    }
+    final String templateFilePath = '${cli.pathCLI}/service.pas';
+    final String templateFileName = '$sourcePath/$unitName.service.pas';
     final String templateContent = File(templateFilePath).readAsStringSync();
-    final String modifiedContent = templateContent
-        .replaceFirst('{unitName}', unitName)
-        .replaceAll('{serviceName}', controllerName);
+    final String modifiedContent =
+        templateContent.replaceFirst('{unitName}', unitName).replaceAll('{serviceName}', className);
 
     File(templateFileName).writeAsStringSync(modifiedContent);
     // Console
     Utils.printCreate('CREATE', templateFileName, Utils.getSizeFile(templateFileName));
     // Lista Update DPR
     cli.updates.add('  $unitName.service in \'src\\modules\\$fileName\\$unitName.service.pas\',');
-    return this;
+    return true;
   }
 }
