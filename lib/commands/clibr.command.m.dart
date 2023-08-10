@@ -82,11 +82,6 @@ class CommandModule implements ICommand {
   }
 
   bool _argGuardExist(final ICli cli) {
-    if (cli.tags.containsKey('--guard')) {
-      return cli.tags['--guard'] ?? false;
-    } else if (cli.tags.containsKey('-gu')) {
-      return cli.tags['-gu'] ?? false;
-    }
-    return false;
+    return (cli.tags['--guard'] == true || cli.tags['--gu'] == true);
   }
 }

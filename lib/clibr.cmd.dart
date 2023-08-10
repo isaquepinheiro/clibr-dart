@@ -70,13 +70,6 @@ class Cli implements ICli {
       '-h': CommandPair(CommandHelp()),
     };
 
-    _tags = {
-      '-gu': false,
-      '--guard': false,
-      '--horse': false,
-      '--vcl': false,
-    };
-
     _optionsInternal = {
       'handler': CommandPair(CommandRouteHandler()),
       'horse-app': CommandPair(CommandGenerateProjectHorse()),
@@ -97,6 +90,13 @@ class Cli implements ICli {
       'v': _optionsInfos,
       '--help': _optionsHelp,
       '-h': _optionsHelp,
+    };
+
+    _tags = {
+      '-gu': false,
+      '--guard': false,
+      '--horse': false,
+      '--vcl': false,
     };
   }
 

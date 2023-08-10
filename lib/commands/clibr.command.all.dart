@@ -24,9 +24,7 @@ class CommandAll implements ICommand {
     sourcePath = '$sourcePath/modules/$fileName';
 
     // Horse
-    if (cli.tags.containsKey('--horse')) {
-      isHorse = cli.tags['--horse'] ?? false;
-    }
+    isHorse = cli.tags['--horse'] ?? false;
 
     if (isHorse) {
       _createRouteHandleHorse(sourcePath, fileName, cli);

@@ -28,14 +28,10 @@ class CommandGenerateProject implements ICommand {
     sourcePath = '$sourcePath/src/modules/ping';
 
     // VCL
-    if (cli.tags.containsKey('--vcl')) {
-      isVCL = cli.tags['--vcl'] ?? false;
-    }
+    isVCL = cli.tags['--vcl'] ?? false;
 
     // Horse
-    if (cli.tags.containsKey('--horse')) {
-      isHorse = cli.tags['--horse'] ?? false;
-    }
+    isHorse = cli.tags['--horse'] ?? false;
 
     if (isHorse) {
       _createProjectHorse(projectPath, fileName, cli);
